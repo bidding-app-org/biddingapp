@@ -1,4 +1,4 @@
-# GitHub Action to build and deploy React CRA app to Azure Web App
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 
 name: Build and deploy React app to Azure Web App - bidding-frontend-srinivash
 
@@ -12,24 +12,36 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    permissions:
+      id-token: write
+      contents: read
+
     steps:
-      # Checkout repository
+      # Checkout code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Setup Node
+      # Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: '20'
 
       # Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # Build React project
+      # Build React app
       - name: Build project
         run: npm run build
+
+      # Login to Azure
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_AE9D4D7D822745C5983648CDE4F9D881 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_2A38E9E2508F41AFA9C5498F2BA34E11 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_6BBAE3C4B22A4429AA6E22D0C995F6E7 }}
 
       # Deploy to Azure
       - name: Deploy to Azure Web App
