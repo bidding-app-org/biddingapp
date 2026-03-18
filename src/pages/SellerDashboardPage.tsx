@@ -47,12 +47,13 @@ export default function SellerDashboardPage() {
       setToast({ msg: 'Enter seller name first', kind: 'error' })
       return
     }
+
     const ok = window.confirm(`Delete '${p.name}'? This cannot be undone.`)
     if (!ok) return
 
     try {
       await deleteProduct(p.id, normalized)
-      setToast({ msg: 'Deleted', kind: 'success' })
+      setToast({ msg: 'Deleted successfully', kind: 'success' })
       await load(normalized)
     } catch (e: any) {
       setToast({ msg: e?.message ?? 'Delete failed', kind: 'error' })
@@ -61,7 +62,11 @@ export default function SellerDashboardPage() {
 
   return (
     <div>
-      <Toast message={toast?.msg ?? null} kind={toast?.kind ?? 'info'} onClose={() => setToast(null)} />
+      <Toast
+        message={toast?.msg ?? null}
+        kind={toast?.kind ?? 'info'}
+        onClose={() => setToast(null)}
+      />
 
       <div className="panel">
         <div className="detailsHeader">
@@ -74,7 +79,11 @@ export default function SellerDashboardPage() {
         <div className="row" style={{ marginTop: 12 }}>
           <label className="field" style={{ flex: 1 }}>
             <span className="label">Seller name</span>
-            <input value={sellerName} onChange={(e) => setSellerName(e.target.value)} placeholder="e.g. seller" />
+            <input
+              value={sellerName}
+              onChange={(e) => setSellerName(e.target.value)}
+              placeholder="e.g. seller"
+            />
           </label>
           <div className="row rowEnd" style={{ alignItems: 'end' }}>
             <button className="btn btnGhost" onClick={onApplySeller}>
@@ -98,28 +107,58 @@ export default function SellerDashboardPage() {
         ) : (
           <div className="grid">
             {items.map((p) => {
-              const ended = Date.now() >= parseLocalDateTime(p.endTime).getTime()
+              const ended =
+                Date.now() >= parseLocalDateTime(p.endTime).getTime()
 
               return (
                 <div key={p.id} className="card productCard">
                   <div className="cardBody">
                     <div className="cardTitleRow">
                       <h3 className="cardTitle">{p.name}</h3>
-                      <span className="price">{formatMoney(p.currentPrice)}</span>
+                      <span className="price">
+                        {formatMoney(p.currentPrice)}
+                      </span>
                     </div>
-                    <div className={`pill ${p.status === 'SOLD' ? 'pillSold' : 'pillActive'}`} style={{ position: 'static', display: 'inline-flex', marginTop: 8 }}>
+
+                    <div
+                      className={`pill ${
+                        p.status === 'SOLD'
+                          ? 'pillSold'
+                          : 'pillActive'
+                      }`}
+                      style={{
+                        position: 'static',
+                        display: 'inline-flex',
+                        marginTop: 8,
+                      }}
+                    >
                       {p.status}
                     </div>
-                    <div className="muted">Ends: {p.endTime.replace('T', ' ')}</div>
+
+                    <div className="muted">
+                      Ends: {p.endTime.replace('T', ' ')}
+                    </div>
 
                     <div className="row rowEnd" style={{ marginTop: 12 }}>
-                      <Link className="btn btnGhost" to={`/products/${p.id}`}>
+                      <Link
+                        className="btn btnGhost"
+                        to={`/products/${p.id}`}
+                      >
                         View
                       </Link>
-                      <Link className="btn btnGhost" to={`/seller/products/${p.id}/edit`} aria-disabled={ended}>
+
+                      <Link
+                        className="btn btnGhost"
+                        to={`/seller/products/${p.id}/edit`}
+                        aria-disabled={ended}
+                      >
                         Edit
                       </Link>
-                      <button className="btn btnDanger" onClick={() => onDelete(p)}>
+
+                      <button
+                        className="btn btnDanger"
+                        onClick={() => onDelete(p)}
+                      >
                         Delete
                       </button>
                     </div>
