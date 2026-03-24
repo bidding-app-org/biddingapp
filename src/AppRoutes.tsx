@@ -6,6 +6,7 @@ import SellerDashboardPage from './pages/SellerDashboardPage'
 import AddProductPage from './pages/AddProductPage'
 import EditProductPage from './pages/EditProductPage'
 import NotFoundPage from './pages/NotFoundPage'
+import SellerSearchPage from './pages/SellerSearchPage'
 
 export default function AppRoutes() {
   return (
@@ -16,6 +17,7 @@ export default function AppRoutes() {
         <Route path="/seller" element={<SellerDashboardPage />} />
         <Route path="/seller/add" element={<AddProductPage />} />
         <Route path="/seller/products/:id/edit" element={<EditProductPage />} />
+         <Route path="/seller/search" element={<SellerSearchPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
