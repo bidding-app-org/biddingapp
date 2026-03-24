@@ -16,7 +16,6 @@ export default function Layout() {
             </NavLink>
             <NavLink to="/seller">Seller Dashboard</NavLink>
             <NavLink to="/seller/add">Add Product</NavLink> 
-            <NavLink to="/seller/search">Search Products</NavLink>
 
           </nav>
         </header>
